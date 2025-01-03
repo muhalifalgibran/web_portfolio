@@ -12,36 +12,52 @@ class PortfolioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-    return Column(
-      children: [
-        UnderConstructionWidget(),
-        const SizedBox(height: 60),
-        NeuContainer(
-          width: width * 0.8,
-          color: AppColors.mintGreen,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                NeuContainer(
-                  child: Image.asset(
-                    'assets/images/image.jpeg',
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          UnderConstructionWidget(),
+          const SizedBox(height: 60),
+          NeuContainer(
+            width: width * 0.8,
+            color: AppColors.mintGreen,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0).copyWith(bottom: 0, top: 0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  NeuContainer(
+                    child: Image.asset(
+                      'assets/images/image.jpeg',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                NeuContainer(
-                  color: AppColors.mintGreen,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
+                  const SizedBox(height: 20),
+                  NeuContainer(
+                    color: AppColors.mintGreen,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.boldBlack,
+                                  width: 2,
+                                ),
+                              ),
+                              child: SvgPicture.asset(
+                                'assets/svgs/instagram.svg',
+                                width: 40,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 40),
+                          Container(
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColors.boldBlack,
@@ -49,55 +65,42 @@ class PortfolioPage extends StatelessWidget {
                               ),
                             ),
                             child: SvgPicture.asset(
-                              'assets/svgs/instagram.svg',
+                              'assets/svgs/X.svg',
                               width: 40,
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 40),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.boldBlack,
-                              width: 2,
+                          const SizedBox(width: 40),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.boldBlack,
+                                width: 2,
+                              ),
+                            ),
+                            child: SvgPicture.asset(
+                              'assets/svgs/linkedin.svg',
+                              width: 40,
                             ),
                           ),
-                          child: SvgPicture.asset(
-                            'assets/svgs/X.svg',
-                            width: 40,
-                          ),
-                        ),
-                        const SizedBox(width: 40),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.boldBlack,
-                              width: 2,
-                            ),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svgs/linkedin.svg',
-                            width: 40,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  caption,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                  const SizedBox(height: 20),
+                  const Text(
+                    caption,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        SizedBox(height: height * 0.05),
-      ],
+          SizedBox(height: height * 0.05),
+        ],
+      ),
     );
   }
 }
