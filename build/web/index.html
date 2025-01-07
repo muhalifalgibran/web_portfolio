@@ -1,73 +1,183 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="web_portfolio">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <title>web_portfolio</title>
   <link rel="manifest" href="manifest.json">
-
   <style>
-    /* Loading styles */
-    #loading {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 100px;
-        color: #555;
-        text-align: center;
-        font-family: Arial, sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    #loading-spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #555;
-        border-radius: 50%;
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #FFD700;
+      position: relative;
+    }
+
+    .background-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    #loading {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .loading-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 300px;
+      justify-content: center;
+    }
+
+    .fancy-loader {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .cube {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: rotate 3s infinite linear;
+      transform-origin: center center;
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid rgba(85, 85, 85, 0.8);
+      background: rgba(85, 85, 85, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      backface-visibility: visible;
+      transform-origin: center center;
+    }
+
+    .front  { transform: translateZ(25px); }
+    .back   { transform: rotateY(180deg) translateZ(25px); }
+    .right  { transform: rotateY(90deg) translateZ(25px); }
+    .left   { transform: rotateY(-90deg) translateZ(25px); }
+    .top    { transform: rotateX(90deg) translateZ(25px); }
+    .bottom { transform: rotateX(-90deg) translateZ(25px); }
+
+    @keyframes rotate {
+      0% {
+        transform: rotateX(-20deg) rotateY(0deg);
+      }
+      100% {
+        transform: rotateX(-20deg) rotateY(360deg);
+      }
+    }
+
+    /* Previous styles remain the same until media query */
+
+    @media (max-width: 480px) {
+      .fancy-loader {
         width: 40px;
         height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
+        perspective: 400px;
+      }
+      
+      .front { transform: translateZ(20px); }
+      .back { transform: rotateY(180deg) translateZ(20px); }
+      .right { transform: rotateY(90deg) translateZ(20px); }
+      .left { transform: rotateY(-90deg) translateZ(20px); }
+      .top { transform: rotateX(90deg) translateZ(20px); }
+      .bottom { transform: rotateX(-90deg) translateZ(20px); }
+      
+      @keyframes rotate {
+        0% {
+          transform: rotateX(-15deg) rotateY(0deg);
+        }
+        100% {
+          transform: rotateX(-15deg) rotateY(360deg);
+        }
+      }
+      
+      .loading-container {
+        gap: 15px;
+        min-width: 250px;
+      }
     }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    
+    #hello-text {
+      font-size: clamp(2rem, 8vw, 80px);
+      color: #555;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      animation: fadeInOut 1s infinite;
+      min-width: 200px;
     }
-    body {
-      background-color: #FFD700;
-    }
-  </style>
 
+
+  </style>
 </head>
 <body>
-  <!-- <script src="flutter_bootstrap.js" async></script> -->
+  <svg class="background-pattern" width="100%" height="100%">
+    <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#555" />
+    </pattern>
+    <rect width="100%" height="100%" fill="url(#dots)" />
+  </svg>
+  
   <div id="loading">
-    <div id="loading-spinner"></div>
-    <div id="hello-text">Hello</div>
+    <div class="loading-container">
+      <div class="fancy-loader">
+        <div class="pulse"></div>
+        <div class="cube">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
+      </div>
+      <div id="hello-text">Hello</div>
+    </div>
   </div>
   <script>
     const helloMessages = [
@@ -82,13 +192,11 @@
         "안녕하세요",    // Korean
         "مرحبًا"      // Arabic
     ];
-
     const helloTextElement = document.getElementById('hello-text');
-    const interval = 250; // 1 second per message
+    const interval = 250;
     let currentIndex = 0;
     let animationComplete = false;
 
-    // Function to run the animation
     const runAnimation = () => {
         return new Promise((resolve) => {
             const intervalId = setInterval(() => {
@@ -104,9 +212,7 @@
         });
     };
 
-    // Start the animation
     runAnimation().then(() => {
-        // After animation completes, start the Flutter app
         _flutter.loader.loadEntrypoint({
             onEntrypointLoaded: (engineInitializer) => {
                 engineInitializer.initializeEngine().then((appRunner) => {
@@ -116,7 +222,7 @@
             }
         });
     });
-</script>
-<script src="flutter.js" defer></script>
+  </script>
+  <script src="flutter.js" defer></script>
 </body>
 </html>

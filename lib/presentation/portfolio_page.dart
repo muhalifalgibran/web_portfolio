@@ -117,7 +117,7 @@ class DottedBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black
+      ..color = const Color(0x55555555)
       ..style = PaintingStyle.fill;
 
     // Start at the top-left and draw dots across the canvas
