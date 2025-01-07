@@ -1,6 +1,6 @@
 {
-    "name": "Gibran's Space/Work/Blogs",
-    "short_name": "Gibran's Space/Work/Blogs",
+    "name": "web_portfolio",
+    "short_name": "web_portfolio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

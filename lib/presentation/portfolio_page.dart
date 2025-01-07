@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neubrutalism_ui/neubrutalism_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_portfolio/core/styles/app_colors.dart';
 import 'package:web_portfolio/core/utils/constants.dart';
 import 'package:web_portfolio/presentation/under_construction_widget.dart';
@@ -41,8 +42,13 @@ class PortfolioPage extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            onTap: () {},
+                          GestureDetector(
+                            onTap: () {
+                              final Uri url = Uri.parse(
+                                'https://.com/khalif0898',
+                              );
+                              launchUrl(url);
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(
@@ -56,30 +62,68 @@ class PortfolioPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(width: 40),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.boldBlack,
-                                width: 2,
+                          const SizedBox(width: 30),
+                          GestureDetector(
+                            onTap: () {
+                              final Uri url = Uri.parse(
+                                'https://x.com/khalif0898',
+                              );
+                              launchUrl(url);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.boldBlack,
+                                  width: 2,
+                                ),
                               ),
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/svgs/X.svg',
-                              width: 40,
+                              child: SvgPicture.asset(
+                                'assets/svgs/x.svg',
+                                width: 40,
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 40),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.boldBlack,
-                                width: 2,
+                          const SizedBox(width: 30),
+                          GestureDetector(
+                            onTap: () {
+                              final Uri url = Uri.parse(
+                                "https://www.linkedin.com/in/muh-alif-al-gibran-64a60112a/",
+                              );
+                              launchUrl(url);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.boldBlack,
+                                  width: 2,
+                                ),
+                              ),
+                              child: SvgPicture.asset(
+                                'assets/svgs/linkedin.svg',
+                                width: 40,
                               ),
                             ),
-                            child: SvgPicture.asset(
-                              'assets/svgs/linkedin.svg',
-                              width: 40,
+                          ),
+                          const SizedBox(width: 30),
+                          GestureDetector(
+                            onTap: () {
+                              final Uri url = Uri.parse(
+                                "https://www.tiktok.com/@gibrannn___",
+                              );
+                              launchUrl(url);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.boldBlack,
+                                  width: 2,
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(5),
+                              child: Image.asset(
+                                'assets/images/tiktok.png',
+                                width: 30,
+                              ),
                             ),
                           ),
                         ],
