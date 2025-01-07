@@ -64,37 +64,29 @@
 
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- <script src="flutter_bootstrap.js" async></script> -->
   <div id="loading">
     <div id="loading-spinner"></div>
     <div id="hello-text">Hello</div>
-</div>
-<script>
+  </div>
+  <script>
     const helloMessages = [
         "Hello",     // English
         "Hola",      // Spanish
         "Bonjour",   // French
         "Ciao",      // Italian
-        "مرحبًا",      // Arabic
         "Hallo",     // German
         "नमस्ते",      // Hindi
         "你好",       // Chinese
         "こんにちは",  // Japanese
         "안녕하세요",    // Korean
+        "مرحبًا"      // Arabic
     ];
 
-    let currentIndex = 0;
     const helloTextElement = document.getElementById('hello-text');
-    const interval = 150; // 0.5 seconds
+    const interval = 250; // 1 second per message
+    let currentIndex = 0;
     let animationComplete = false;
-    let appLoaded = false;
-
-    // Function to hide the loading screen
-    const hideLoading = () => {
-        if (animationComplete && appLoaded) {
-            document.getElementById('loading').style.display = 'none';
-        }
-    };
 
     // Function to run the animation
     const runAnimation = () => {
@@ -105,31 +97,25 @@
                     currentIndex++;
                 } else {
                     clearInterval(intervalId);
-                    animationComplete = true; // Mark animation as complete
-                    resolve(); // Resolve the promise
-                    hideLoading(); // Check if we can hide the loading screen
+                    animationComplete = true;
+                    resolve();
                 }
             }, interval);
         });
     };
 
-    // Run the animation
-    runAnimation();
-
-    // Listen for Flutter app load event
-    window.addEventListener('flutter-first-frame', () => {
-        appLoaded = true; // Mark app as loaded
-        hideLoading(); // Check if we can hide the loading screen
+    // Start the animation
+    runAnimation().then(() => {
+        // After animation completes, start the Flutter app
+        _flutter.loader.loadEntrypoint({
+            onEntrypointLoaded: (engineInitializer) => {
+                engineInitializer.initializeEngine().then((appRunner) => {
+                    document.getElementById('loading').style.display = 'none';
+                    appRunner.runApp();
+                });
+            }
+        });
     });
-
-    // Fallback if `flutter-first-frame` is not fired
-    setTimeout(() => {
-        if (!appLoaded) {
-            console.warn("Fallback: App load event not detected in time.");
-            appLoaded = true; // Force appLoaded to true after timeout
-            hideLoading();
-        }
-    }, 10000); // Fallback timeout (10 seconds)
 </script>
 <script src="flutter.js" defer></script>
 </body>

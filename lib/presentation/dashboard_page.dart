@@ -12,6 +12,7 @@ class DashboardPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(20.0),
         width: double.infinity,
+        height: double.infinity,
         child: CustomPaint(
           painter: DottedBackgroundPainter(
             dotRadius: 1.0, // Adjust dot size
