@@ -31,8 +31,106 @@
 
   <title>web_portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Loading styles */
+    #loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 100px;
+        color: #555;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+    #loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #555;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    body {
+      background-color: #FFD700;
+    }
+  </style>
+
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+  <div id="loading">
+    <div id="loading-spinner"></div>
+    <div id="hello-text">Hello</div>
+</div>
+<script>
+    const helloMessages = [
+        "Hello",     // English
+        "Hola",      // Spanish
+        "Bonjour",   // French
+        "Ciao",      // Italian
+        "مرحبًا",      // Arabic
+        "Hallo",     // German
+        "नमस्ते",      // Hindi
+        "你好",       // Chinese
+        "こんにちは",  // Japanese
+        "안녕하세요",    // Korean
+    ];
+
+    let currentIndex = 0;
+    const helloTextElement = document.getElementById('hello-text');
+    const interval = 150; // 0.5 seconds
+    let animationComplete = false;
+    let appLoaded = false;
+
+    // Function to hide the loading screen
+    const hideLoading = () => {
+        if (animationComplete && appLoaded) {
+            document.getElementById('loading').style.display = 'none';
+        }
+    };
+
+    // Function to run the animation
+    const runAnimation = () => {
+        return new Promise((resolve) => {
+            const intervalId = setInterval(() => {
+                if (currentIndex < helloMessages.length) {
+                    helloTextElement.textContent = helloMessages[currentIndex];
+                    currentIndex++;
+                } else {
+                    clearInterval(intervalId);
+                    animationComplete = true; // Mark animation as complete
+                    resolve(); // Resolve the promise
+                    hideLoading(); // Check if we can hide the loading screen
+                }
+            }, interval);
+        });
+    };
+
+    // Run the animation
+    runAnimation();
+
+    // Listen for Flutter app load event
+    window.addEventListener('flutter-first-frame', () => {
+        appLoaded = true; // Mark app as loaded
+        hideLoading(); // Check if we can hide the loading screen
+    });
+
+    // Fallback if `flutter-first-frame` is not fired
+    setTimeout(() => {
+        if (!appLoaded) {
+            console.warn("Fallback: App load event not detected in time.");
+            appLoaded = true; // Force appLoaded to true after timeout
+            hideLoading();
+        }
+    }, 10000); // Fallback timeout (10 seconds)
+</script>
+<script src="flutter.js" defer></script>
 </body>
 </html>
